@@ -11,7 +11,6 @@
   border-radius: 5px;
   background-color: red;
   box-shadow: 0 5px 5px ;
-  transition: all 1s;
   .note-head {
     position: absolute;
     left: 60px;
@@ -36,4 +35,7 @@
     color: #fff;
     cursor: pointer;
   }
+}
+.transition {
+  transition: all 1s;
 }

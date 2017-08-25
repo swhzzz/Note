@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10452,7 +10452,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -10771,27 +10771,29 @@ function updateLink (link, options, obj) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 
-var _waterfall = __webpack_require__(14);
+var _waterfall = __webpack_require__(4);
 
 var _waterfall2 = _interopRequireDefault(_waterfall);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Note = function () {
-    function _Note() {
+    function _Note(opts) {
+        this.data = opts;
         this.msg = '在这里输入内容';
         this.createNode();
         this.bindEvent();
     }
 
     _Note.prototype.createNode = function () {
-        var tpl = '<div class="note">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true">' + this.msg + '</div> \n            </div>';
+        var tpl = '<div class="note transition">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true">' + this.data.text + '</div> \n            </div>';
         this.$note = $(tpl);
         this.$noteHead = this.$note.find('.note-head');
         this.$noteContent = this.$note.find('.note-content');
         $('main').append(this.$note);
+        console.log(this.data.text);
     };
 
     _Note.prototype.bindEvent = function () {
@@ -10805,9 +10807,9 @@ var Note = function () {
         this.$noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - _this.$note.offset().left; //获取当前鼠标距离左侧边框的距离
             var evtY = e.pageY - _this.$note.offset().top;
-            _this.$note.addClass('draggable').data('evtPos', { 'x': evtX, 'y': evtY }); //保存数据到data中
+            _this.$note.removeClass('transition').addClass('draggable').data('evtPos', { 'x': evtX, 'y': evtY }); //保存数据到data中
         }).on('mouseup', function () {
-            _this.$note.removeClass('draggable');
+            _this.$note.removeClass('draggable').addClass('transition');
         });
 
         this.$note.on('mouseover', function () {
@@ -10835,8 +10837,8 @@ var Note = function () {
     };
 
     return {
-        init: function init() {
-            new _Note();
+        init: function init(data) {
+            new _Note(data);
         }
     };
 }();
@@ -10851,17 +10853,58 @@ module.exports = Note;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _note = __webpack_require__(3);
+var WaterFall = function () {
+    var $ct = void 0;
+    function render($c) {
+        //初始化
+        $ct = $c;
+        var $items = $ct.children();
+        var itemsWidth = $items.outerWidth(true);
+        var windowWidth = $(window).width();
+        var cols = Math.floor(windowWidth / itemsWidth);
+        var colsHeightArr = [];
+        for (var i = 0; i < cols; i++) {
+            colsHeightArr.push(0);
+        } //初始化高度数组
 
-var _note2 = _interopRequireDefault(_note);
+        for (var _i = 0; _i < $items.length; _i++) {
+            //遍历所有note
+            var minHeight = Math.min.apply(this, colsHeightArr); //获取最小高度
+            var minHeightPos = colsHeightArr.indexOf(minHeight); //获取最小高度下标
+            $items.eq(_i).css({ //摆放
+                left: itemsWidth * minHeightPos,
+                top: minHeight
+            });
+            colsHeightArr[minHeightPos] += $items.eq(_i).outerHeight(true); //摆放完成后增加高度
+        }
+    }
 
-var _toast = __webpack_require__(8);
+    $(window).on('resize', function () {
+        render($ct);
+    });
+
+    return {
+        init: render
+    };
+}();
+
+module.exports = WaterFall;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _toast = __webpack_require__(9);
 
 var _toast2 = _interopRequireDefault(_toast);
 
-__webpack_require__(11);
+__webpack_require__(12);
 
-var _noteManager = __webpack_require__(13);
+var _noteManager = __webpack_require__(14);
 
 var _noteManager2 = _interopRequireDefault(_noteManager);
 
@@ -10869,23 +10912,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import WaterFall from 'module/waterfall'
 
-// new Toast('fds')
-// new Toast('fdss')
-// new Toast('fdsds')
-$('#add').on('click', function () {
-    _noteManager2.default.add();
-});
-_noteManager2.default.add();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+// $('#add').on('click', () => {
+//     NoteManager.add()
+// });
+// NoteManager.add();
+
+_noteManager2.default.load();
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(6);
+var content = __webpack_require__(7);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10910,7 +10951,7 @@ if(false) {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -10918,13 +10959,13 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: red;\n  box-shadow: 0 5px 5px;\n  transition: all 1s; }\n  .note .note-head {\n    position: absolute;\n    left: 60px;\n    top: -12px;\n    width: 80px;\n    height: 24px;\n    transform: skew(20deg);\n    background-color: green;\n    cursor: move; }\n  .note .note-content {\n    position: relative;\n    padding: 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #fff;\n    cursor: pointer; }\n", ""]);
+exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: red;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: absolute;\n    left: 60px;\n    top: -12px;\n    width: 80px;\n    height: 24px;\n    transform: skew(20deg);\n    background-color: green;\n    cursor: move; }\n  .note .note-content {\n    position: relative;\n    padding: 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #fff;\n    cursor: pointer; }\n\n.transition {\n  transition: all 1s; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 
@@ -11019,7 +11060,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11029,7 +11070,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(9);
+__webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11050,13 +11091,13 @@ Toast.prototype.init = function (msg) {
 module.exports = Toast;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(10);
+var content = __webpack_require__(11);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11081,7 +11122,7 @@ if(false) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -11095,13 +11136,13 @@ exports.push([module.i, ".toast {\n  display: none;\n  position: fixed;\n  botto
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(12);
+var content = __webpack_require__(13);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11126,7 +11167,7 @@ if(false) {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -11140,7 +11181,7 @@ exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11150,7 +11191,7 @@ var _note = __webpack_require__(3);
 
 var _note2 = _interopRequireDefault(_note);
 
-var _waterfall = __webpack_require__(14);
+var _waterfall = __webpack_require__(4);
 
 var _waterfall2 = _interopRequireDefault(_waterfall);
 
@@ -11161,57 +11202,24 @@ var NoteManager = function () {
         _note2.default.init();
         _waterfall2.default.init($('main'));
     }
+
+    function load() {
+        $.get('/api/xx').then(function (data) {
+            //页面加载时，发请求，拿数据，遍历渲染，布局
+            for (var i = 0; i < data.length; i++) {
+                _note2.default.init(data[i]);
+            }
+            _waterfall2.default.init($('main'));
+        });
+    }
+
     return {
-        add: add
+        add: add,
+        load: load
     };
 }();
 
 module.exports = NoteManager;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-var WaterFall = function () {
-    var $ct = void 0;
-    function render($c) {
-        //初始化
-        $ct = $c;
-        var $items = $ct.children();
-        var itemsWidth = $items.outerWidth(true);
-        var windowWidth = $(window).width();
-        var cols = Math.floor(windowWidth / itemsWidth);
-        var colsHeightArr = [];
-        for (var i = 0; i < cols; i++) {
-            colsHeightArr.push(0);
-        } //初始化高度数组
-
-        for (var _i = 0; _i < $items.length; _i++) {
-            //遍历所有note
-            var minHeight = Math.min.apply(this, colsHeightArr); //获取最小高度
-            var minHeightPos = colsHeightArr.indexOf(minHeight); //获取最小高度下标
-            $items.eq(_i).css({ //摆放
-                left: itemsWidth * minHeightPos,
-                top: minHeight
-            });
-            colsHeightArr[minHeightPos] += $items.eq(_i).outerHeight(true); //摆放完成后增加高度
-        }
-    }
-
-    $(window).on('resize', function () {
-        render($ct);
-    });
-
-    return {
-        init: render
-    };
-}();
-
-module.exports = WaterFall;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })

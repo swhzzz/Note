@@ -2,24 +2,25 @@ import 'scss/note.scss'
 import WaterFall from 'module/waterfall'
 
 let Note = (function () {
-    function _Note() {
+    function _Note(opts) {
+        this.data=opts;
         this.msg = '在这里输入内容';
         this.createNode();
         this.bindEvent();
     }
 
     _Note.prototype.createNode = function () {
-        let tpl = `<div class="note">
+        let tpl = `<div class="note transition">
                <div class="note-head"></div>
                <div class="close">x</div>
-               <div class="note-content" contenteditable="true">${this.msg}</div> 
+               <div class="note-content" contenteditable="true">${this.data.text}</div> 
             </div>`;
         this.$note = $(tpl);
         this.$noteHead = this.$note.find('.note-head');
         this.$noteContent = this.$note.find('.note-content');
         $('main').append(this.$note);
+        console.log(this.data.text)
     };
-
 
     _Note.prototype.bindEvent = function () {
         this.$noteContent.on('focus', () => { //focus删除内容
@@ -30,9 +31,9 @@ let Note = (function () {
         this.$noteHead.on('mousedown', (e) => {
             let evtX = e.pageX - this.$note.offset().left;//获取当前鼠标距离左侧边框的距离
             let evtY = e.pageY - this.$note.offset().top;
-            this.$note.addClass('draggable').data('evtPos', {'x': evtX, 'y': evtY})//保存数据到data中
+            this.$note.removeClass('transition').addClass('draggable').data('evtPos', {'x': evtX, 'y': evtY})//保存数据到data中
         }).on('mouseup', () => {
-            this.$note.removeClass('draggable')
+            this.$note.removeClass('draggable').addClass('transition')
         });
 
         this.$note.on('mouseover', () => {
@@ -58,9 +59,11 @@ let Note = (function () {
         })
     };
 
+
+
     return {
-        init() {
-            new _Note()
+        init(data) {
+            new _Note(data)
         }
     }
 })();
