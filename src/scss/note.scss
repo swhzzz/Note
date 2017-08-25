@@ -1,0 +1,39 @@
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+.note {
+  position: absolute;
+  width: 200px;
+  margin: 8px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: red;
+  box-shadow: 0 5px 5px ;
+  transition: all 1s;
+  .note-head {
+    position: absolute;
+    left: 60px;
+    top: -12px;
+    width: 80px;
+    height: 24px;
+    transform: skew(20deg);
+    background-color: green;
+    cursor: move;
+  }
+  .note-content {
+    position: relative;
+    padding: 16px;
+    outline: none;
+  }
+  .close {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    cursor: pointer;
+  }
+}

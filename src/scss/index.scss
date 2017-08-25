@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,body {
+  height: 100%;
+}
+body {
+  background: url("https://i.loli.net/2017/08/25/599f81dc474e2.jpg");
+}
+button {
+  padding: 8px 16px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 5px 5px #ddd;
+  #add {
+    border-radius: 16px;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+main {
+  position:relative;
+  margin-top: 16px;
+}
