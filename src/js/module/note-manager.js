@@ -8,7 +8,7 @@ let NoteManager = (function () {
     }
 
     function load() {
-        $.get('/api/xx').then((data) => {//页面加载时，发请求，拿数据，遍历渲染，布局
+        $.get('/api/fetch').then((data) => {//页面加载时，发请求，拿数据，遍历渲染，布局
             for (let i = 0; i < data.length; i++) {
                 Note.init(data[i])
             }

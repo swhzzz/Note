@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var api = require('./routes/api');//定义新接口时，require
+var api = require('./routes/api');
 
 var app = express();
 

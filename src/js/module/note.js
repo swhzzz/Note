@@ -1,10 +1,10 @@
 import 'scss/note.scss'
 import WaterFall from 'module/waterfall'
+import Toast from 'module/toast'
 
 let Note = (function () {
     function _Note(opts) {
-        this.data=opts;
-        this.msg = '在这里输入内容';
+        this.data = opts || {id: '', text: '在这里输入内容'};
         this.createNode();
         this.bindEvent();
     }
@@ -19,12 +19,11 @@ let Note = (function () {
         this.$noteHead = this.$note.find('.note-head');
         this.$noteContent = this.$note.find('.note-content');
         $('main').append(this.$note);
-        console.log(this.data.text)
     };
 
     _Note.prototype.bindEvent = function () {
         this.$noteContent.on('focus', () => { //focus删除内容
-            if (this.$noteContent.html() === this.msg)
+            if (this.data.text === '在这里输入内容')
                 this.$noteContent.html('')
         });
 
@@ -38,14 +37,25 @@ let Note = (function () {
 
         this.$note.on('mouseover', () => {
             this.$note.find('.close').fadeIn()
-        });
-
-        this.$note.on('mouseleave', () => {
+        }).on('mouseleave', () => {
             this.$note.find('.close').fadeOut()
         });
 
+        this.$noteContent.on('blur', () => {
+            let text=this.$noteContent.html();
+            this.data.text=text;
+            if (text === '') {
+                this.$note.remove()
+            } else if(this.data.id){//通过id是否存在来判断note是否是新增的
+                this.edit()
+            } else{
+                this.add()
+            }
+        });
+
         this.$note.find('.close').on('click', () => {
-            this.$note.remove()
+            this.$note.remove();
+            this.delete();
             WaterFall.init($('main'))
         });
 
@@ -59,7 +69,25 @@ let Note = (function () {
         })
     };
 
+    _Note.prototype.add = function () {
+        $.post('/api/add', {msg: this.data.text}).then((result) => {
+            // console.log(result)
+            this.data=result;//服务器新增数据后，拿到服务器返回的id，赋到note上
+            result.status === 0 ? Toast.init('success') : Toast.init('failed')
+        })
+    };
 
+    _Note.prototype.delete =function(){
+        $.post('/api/delete',{id: this.data.id}).then((result)=>{
+            result.status === 0 ? Toast.init('success') : Toast.init('failed')
+        })
+    };
+
+    _Note.prototype.edit=function(){
+        $.post('/api/edit',{id: this.data.id,msg: this.data.text}).then((result)=>{
+            result.status === 0 ? Toast.init('success') : Toast.init('failed')
+        })
+    };
 
     return {
         init(data) {
