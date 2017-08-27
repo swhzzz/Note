@@ -3,25 +3,24 @@ import 'scss/toast.scss'
 
 let Toast = (function () {
     function _Toast(msg) {
-        this.msg = msg;
-        this.create(this.msg)
+        this.create(msg)
     }
 
     _Toast.prototype.create= function (msg) {
         let $div = $(`<div class="toast">${msg}</div>`);
         $('body').append($div);
-        $div.fadeIn(700, () => {
-            $div.fadeOut(700, () => {
-                $div.remove()
-            })
-        })
-    }
+        $div.addClass('animation');
+        setTimeout(()=>{
+            $div.remove()
+        },2500)
+
+    };
 
     return {
         init(msg){
             new _Toast(msg)
         }
     }
-})()
+})();
 
 module.exports = Toast;

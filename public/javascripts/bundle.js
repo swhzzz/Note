@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10769,6 +10769,44 @@ function updateLink (link, options, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Toast = function () {
+    function _Toast(msg) {
+        this.create(msg);
+    }
+
+    _Toast.prototype.create = function (msg) {
+        var $div = (0, _jquery2.default)('<div class="toast">' + msg + '</div>');
+        (0, _jquery2.default)('body').append($div);
+        $div.addClass('animation');
+        setTimeout(function () {
+            $div.remove();
+        }, 2500);
+    };
+
+    return {
+        init: function init(msg) {
+            new _Toast(msg);
+        }
+    };
+}();
+
+module.exports = Toast;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
 var WaterFall = function () {
@@ -10810,13 +10848,13 @@ module.exports = WaterFall;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _toast = __webpack_require__(5);
+var _toast = __webpack_require__(3);
 
 var _toast2 = _interopRequireDefault(_toast);
 
@@ -10830,52 +10868,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import WaterFall from 'module/waterfall'
 
-$('#add').on('click', function () {
+$('.add').on('click', function () {
     _noteManager2.default.add();
 });
 _noteManager2.default.load();
 // Toast.init('success')
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-__webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Toast = function () {
-    function _Toast(msg) {
-        this.msg = msg;
-        this.create(this.msg);
-    }
-
-    _Toast.prototype.create = function (msg) {
-        var $div = (0, _jquery2.default)('<div class="toast">' + msg + '</div>');
-        (0, _jquery2.default)('body').append($div);
-        $div.fadeIn(700, function () {
-            $div.fadeOut(700, function () {
-                $div.remove();
-            });
-        });
-    };
-
-    return {
-        init: function init(msg) {
-            new _Toast(msg);
-        }
-    };
-}();
-
-module.exports = Toast;
 
 /***/ }),
 /* 6 */
@@ -10917,7 +10915,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".toast {\n  display: none;\n  position: fixed;\n  bottom: 16px;\n  left: 50%;\n  transform: translateX(-50%);\n  color: #fff;\n  box-shadow: 0 0px 8px #fff;\n  padding: 8px 16px; }\n", ""]);
+exports.push([module.i, ".toast {\n  display: block;\n  position: fixed;\n  bottom: 16px;\n  color: #fff;\n  box-shadow: 0 0px 8px #fff;\n  padding: 8px 16px; }\n\n.animation {\n  animation: slide 3s; }\n\n@keyframes slide {\n  from {\n    right: 0;\n    transform: translateX(100%); }\n  50% {\n    right: 50%;\n    transform: translateX(50%); }\n  to {\n    right: 100%;\n    transform: translateX(-120%); } }\n", ""]);
 
 // exports
 
@@ -11057,7 +11055,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/25/599f81dc474e2.jpg\"); }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  border-bottom: 1px solid #eee;\n  box-shadow: 0 5px 5px #ddd; }\n  .topBar #add {\n    border-radius: 16px;\n    outline: none;\n    cursor: pointer; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\na {\n  text-decoration: none;\n  color: inherit; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/27/59a2b45284497.jpg\");\n  background-size: cover; }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  box-shadow: 0 3px 25px #dff497; }\n  .topBar .btn {\n    padding: 8px 16px;\n    border: 1px solid #fff;\n    border-radius: 8px;\n    color: #fff;\n    outline: none;\n    cursor: pointer;\n    transition: all .6s; }\n    .topBar .btn:hover {\n      color: #dff497;\n      border-color: #dff497; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
 
 // exports
 
@@ -11073,7 +11071,7 @@ var _note = __webpack_require__(12);
 
 var _note2 = _interopRequireDefault(_note);
 
-var _waterfall = __webpack_require__(3);
+var _waterfall = __webpack_require__(4);
 
 var _waterfall2 = _interopRequireDefault(_waterfall);
 
@@ -11088,6 +11086,7 @@ var NoteManager = function () {
     function load() {
         $.get('/api/fetch').then(function (data) {
             //页面加载时，发请求，拿数据，遍历渲染，布局
+            // console.log(data)
             for (var i = 0; i < data.length; i++) {
                 _note2.default.init(data[i]);
             }
@@ -11113,11 +11112,11 @@ module.exports = NoteManager;
 
 __webpack_require__(13);
 
-var _waterfall = __webpack_require__(3);
+var _waterfall = __webpack_require__(4);
 
 var _waterfall2 = _interopRequireDefault(_waterfall);
 
-var _toast = __webpack_require__(5);
+var _toast = __webpack_require__(3);
 
 var _toast2 = _interopRequireDefault(_toast);
 
@@ -11125,16 +11124,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Note = function () {
     function _Note(opts) {
-        this.data = opts || { id: '', text: '在这里输入内容' };
+        this.initOpts(opts);
+        //this.data = opts || {id: '', text: '在这里输入内容',createdAt: ''};//这个createdAt为了不在新建的时候，时间显示undefined
         this.createNode();
         this.bindEvent();
     }
 
+    _Note.prototype.initOpts = function (opts) {
+        // console.log(opts);
+        if (opts) {
+            //这里是从数据库加载的数据
+            opts.createdAt = opts.createdAt.substr(0, 19); //截取时间
+            this.data = opts;
+        } else {
+            this.data = { id: '', text: '在这里输入内容', createdAt: '' }; //这里是点击新增的时候的数据
+        }
+    };
+
     _Note.prototype.createNode = function () {
-        var tpl = '<div class="note transition">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true">' + this.data.text + '</div> \n            </div>';
+        var tpl = '<div class="note transition flipInX">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true">' + this.data.text + '</div> \n               <div class="time">' + this.data.createdAt + '</div>\n            </div>';
         this.$note = $(tpl);
         this.$noteHead = this.$note.find('.note-head');
         this.$noteContent = this.$note.find('.note-content');
+        this.$noteContent.data('oldText', this.data.text);
         $('main').append(this.$note);
     };
 
@@ -11142,8 +11154,9 @@ var Note = function () {
         var _this = this;
 
         this.$noteContent.on('focus', function () {
-            //focus删除内容
-            if (_this.data.text === '在这里输入内容') _this.$noteContent.html('');
+            if (_this.data.text === '在这里输入内容') {
+                _this.$noteContent.html('');
+            }
         });
 
         this.$noteHead.on('mousedown', function (e) {
@@ -11151,7 +11164,7 @@ var Note = function () {
             var evtY = e.pageY - _this.$note.offset().top;
             _this.$note.removeClass('transition').addClass('draggable').data('evtPos', { 'x': evtX, 'y': evtY }); //保存数据到data中
         }).on('mouseup', function () {
-            _this.$note.removeClass('draggable').addClass('transition');
+            _this.$note.removeClass('draggable ').addClass('transition');
         });
 
         this.$note.on('mouseover', function () {
@@ -11162,14 +11175,23 @@ var Note = function () {
 
         this.$noteContent.on('blur', function () {
             var text = _this.$noteContent.html();
-            _this.data.text = text;
-            if (text === '') {
-                _this.$note.remove();
-            } else if (_this.data.id) {
-                //通过id是否存在来判断note是否是新增的
-                _this.edit();
-            } else {
-                _this.add();
+            var oldText = _this.$noteContent.data('oldText');
+            // console.log(oldText, text)
+            if (oldText !== text) {
+                if (_this.data.id) {
+                    if (text === '') {
+                        _this.delete();
+                        _this.$note.remove();
+                        _waterfall2.default.init($('main'));
+                        // Toast.init('请输入内容');
+                        return;
+                    }
+                    _this.data.text = text;
+                    _this.edit();
+                } else {
+                    _this.data.text = text;
+                    _this.add();
+                }
             }
         });
 
@@ -11194,21 +11216,21 @@ var Note = function () {
         var _this2 = this;
 
         $.post('/api/add', { msg: this.data.text }).then(function (result) {
-            // console.log(result)
             _this2.data = result; //服务器新增数据后，拿到服务器返回的id，赋到note上
-            result.status === 0 ? _toast2.default.init('success') : _toast2.default.init('failed');
+            // console.log(this.data)
+            result.status === 0 ? _toast2.default.init('添加成功') : _toast2.default.init('添加失败');
         });
     };
 
     _Note.prototype.delete = function () {
         $.post('/api/delete', { id: this.data.id }).then(function (result) {
-            result.status === 0 ? _toast2.default.init('success') : _toast2.default.init('failed');
+            result.status === 0 ? _toast2.default.init('删除成功') : _toast2.default.init('删除失败');
         });
     };
 
     _Note.prototype.edit = function () {
         $.post('/api/edit', { id: this.data.id, msg: this.data.text }).then(function (result) {
-            result.status === 0 ? _toast2.default.init('success') : _toast2.default.init('failed');
+            result.status === 0 ? _toast2.default.init('编辑成功') : _toast2.default.init('编辑失败');
         });
     };
 
@@ -11262,7 +11284,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 16px 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: red;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: absolute;\n    left: 60px;\n    top: -12px;\n    width: 80px;\n    height: 24px;\n    transform: skew(20deg);\n    background-color: green;\n    cursor: move; }\n  .note .note-content {\n    position: relative;\n    padding: 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #fff;\n    cursor: pointer; }\n\n.transition {\n  transition: all 1s; }\n", ""]);
+exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 16px 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: #dff497;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: relative;\n    top: -20px;\n    left: 20px;\n    width: 30px;\n    height: 45px;\n    background: #008700;\n    cursor: move; }\n    .note .note-head:after {\n      position: absolute;\n      bottom: 0;\n      content: '';\n      width: 0;\n      height: 0;\n      border-top: 15px solid transparent;\n      border-left: 15px solid transparent;\n      border-right: 15px solid transparent;\n      border-bottom: 15px solid #dff497; }\n    .note .note-head:before {\n      position: absolute;\n      content: '';\n      width: 0;\n      height: 0;\n      top: 0;\n      left: 30px;\n      border-right: 7px solid transparent;\n      border-bottom: 12px solid #008700; }\n  .note .note-content {\n    position: relative;\n    padding: 0 16px 16px 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #000;\n    cursor: pointer; }\n  .note .time {\n    text-align: right; }\n\n.transition {\n  transition: all 1s; }\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0; }\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in; }\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1; }\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }\n  to {\n    transform: perspective(400px); } }\n\n.flipInX {\n  backface-visibility: visible !important;\n  animation: flipInX 1s; }\n", ""]);
 
 // exports
 

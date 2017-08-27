@@ -3,11 +3,16 @@
   padding: 0;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 html,body {
   height: 100%;
 }
 body {
-  background: url("https://i.loli.net/2017/08/25/599f81dc474e2.jpg");
+  background: url("https://i.loli.net/2017/08/27/59a2b45284497.jpg");
+  background-size: cover;
 }
 button {
   padding: 8px 16px;
@@ -17,12 +22,20 @@ button {
   display: flex;
   justify-content: space-between;
   padding: 8px 16px;
-  border-bottom: 1px solid #eee;
-  box-shadow: 0 5px 5px #ddd;
-  #add {
-    border-radius: 16px;
+  //border-bottom: 1px solid #fff;
+  box-shadow: 0 3px 25px rgb(223, 244, 151);
+  .btn {
+    padding: 8px 16px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    color: #fff;
     outline: none;
     cursor: pointer;
+    transition: all .6s;
+    &:hover {
+      color: rgb(223, 244, 151);
+      border-color: rgb(223, 244, 151);
+    }
   }
 }
 
