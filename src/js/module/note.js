@@ -1,8 +1,8 @@
 require('scss/note.scss')
-const WaterFall = require('module/waterfall')
-const  Toast = require('module/toast')
+var WaterFall = require('module/waterfall')
+var  Toast = require('module/toast')
 
-let Note = (function () {
+var Note = (function () {
     function _Note(opts) {
         this.initOpts(opts);
         //this.data = opts || {id: '', text: '在这里输入内容',createdAt: ''};//这个createdAt为了不在新建的时候，时间显示undefined
@@ -21,7 +21,7 @@ let Note = (function () {
     };
 
     _Note.prototype.createNode = function () {
-        let tpl = `<div class="note transition flipInX">
+        var tpl = `<div class="note transition flipInX">
                <div class="note-head"></div>
                <div class="close">x</div>
                <div class="note-content" contenteditable="true">${this.data.text}</div> 
@@ -42,8 +42,8 @@ let Note = (function () {
         });
 
         this.$noteHead.on('mousedown', (e) => {
-            let evtX = e.pageX - this.$note.offset().left;//获取当前鼠标距离左侧边框的距离
-            let evtY = e.pageY - this.$note.offset().top;
+            var evtX = e.pageX - this.$note.offset().left;//获取当前鼠标距离左侧边框的距离
+            var evtY = e.pageY - this.$note.offset().top;
             this.$note.removeClass('transition').addClass('draggable').data('evtPos', {'x': evtX, 'y': evtY})//保存数据到data中
         }).on('mouseup', () => {
             this.$note.removeClass('draggable ').addClass('transition')
@@ -56,13 +56,13 @@ let Note = (function () {
         });
 
         this.$noteContent.on('blur', () => {
-            let text = this.$noteContent.html();
-            let oldText = this.$noteContent.data('oldText');
+            var text = this.$noteContent.html();
+            var oldText = this.$noteContent.data('oldText');
             // console.log(oldText, text)
             if (oldText !== text) {
                 if (this.data.id) {
                     if (text === '') {
-                        this.delete();
+                        this.devare();
                         this.$note.remove();
                         WaterFall.init($('main'));
                         // Toast.init('请输入内容');
@@ -79,7 +79,7 @@ let Note = (function () {
 
         this.$note.find('.close').on('click', () => {
             this.$note.remove();
-            this.delete();
+            this.devare();
             WaterFall.init($('main'))
         });
 
@@ -101,7 +101,7 @@ let Note = (function () {
         })
     };
 
-    _Note.prototype.delete = function () {
+    _Note.prototype.devare = function () {
         $.post('/api/delete', {id: this.data.id}).then((result) => {
             result.status === 0 ? Toast.init('删除成功') : Toast.init('删除失败')
         })

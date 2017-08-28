@@ -10805,7 +10805,7 @@ module.exports = Toast;
 /* WEBPACK VAR INJECTION */(function($) {
 
 var WaterFall = function () {
-    var $ct = void 0;
+    var $ct;
     function render($c) {
         //初始化
         $ct = $c;
@@ -10818,15 +10818,15 @@ var WaterFall = function () {
             colsHeightArr.push(0);
         } //初始化高度数组
 
-        for (var _i = 0; _i < $items.length; _i++) {
+        for (var i = 0; i < $items.length; i++) {
             //遍历所有note
             var minHeight = Math.min.apply(this, colsHeightArr); //获取最小高度
             var minHeightPos = colsHeightArr.indexOf(minHeight); //获取最小高度下标
-            $items.eq(_i).css({ //摆放
+            $items.eq(i).css({ //摆放
                 left: itemsWidth * minHeightPos,
                 top: minHeight
             });
-            colsHeightArr[minHeightPos] += $items.eq(_i).outerHeight(true); //摆放完成后增加高度
+            colsHeightArr[minHeightPos] += $items.eq(i).outerHeight(true); //摆放完成后增加高度
         }
     }
 
@@ -11148,7 +11148,7 @@ var Note = function () {
             if (oldText !== text) {
                 if (_this.data.id) {
                     if (text === '') {
-                        _this.delete();
+                        _this.devare();
                         _this.$note.remove();
                         WaterFall.init($('main'));
                         // Toast.init('请输入内容');
@@ -11165,7 +11165,7 @@ var Note = function () {
 
         this.$note.find('.close').on('click', function () {
             _this.$note.remove();
-            _this.delete();
+            _this.devare();
             WaterFall.init($('main'));
         });
 
@@ -11190,7 +11190,7 @@ var Note = function () {
         });
     };
 
-    _Note.prototype.delete = function () {
+    _Note.prototype.devare = function () {
         $.post('/api/delete', { id: this.data.id }).then(function (result) {
             result.status === 0 ? Toast.init('删除成功') : Toast.init('删除失败');
         });

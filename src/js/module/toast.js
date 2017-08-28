@@ -1,13 +1,13 @@
-const $ =require('jquery')
+var $ =require('jquery')
 require('scss/toast.scss')
 
-let Toast = (function () {
+var Toast = (function () {
     function _Toast(msg) {
         this.create(msg)
     }
 
     _Toast.prototype.create= function (msg) {
-        let $div = $(`<div class="toast">${msg}</div>`);
+        var $div = $(`<div class="toast">${msg}</div>`);
         $('body').append($div);
         $div.addClass('animation');
         setTimeout(()=>{
