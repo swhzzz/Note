@@ -1,5 +1,5 @@
-import $ from 'jquery'
-import 'scss/toast.scss'
+const $ =require('jquery')
+require('scss/toast.scss')
 
 let Toast = (function () {
     function _Toast(msg) {

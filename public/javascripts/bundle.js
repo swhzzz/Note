@@ -10771,13 +10771,8 @@ function updateLink (link, options, obj) {
 "use strict";
 
 
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
+var $ = __webpack_require__(0);
 __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Toast = function () {
     function _Toast(msg) {
@@ -10785,8 +10780,8 @@ var Toast = function () {
     }
 
     _Toast.prototype.create = function (msg) {
-        var $div = (0, _jquery2.default)('<div class="toast">' + msg + '</div>');
-        (0, _jquery2.default)('body').append($div);
+        var $div = $('<div class="toast">' + msg + '</div>');
+        $('body').append($div);
         $div.addClass('animation');
         setTimeout(function () {
             $div.remove();
@@ -10854,25 +10849,13 @@ module.exports = WaterFall;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _toast = __webpack_require__(3);
-
-var _toast2 = _interopRequireDefault(_toast);
-
 __webpack_require__(9);
-
-var _noteManager = __webpack_require__(11);
-
-var _noteManager2 = _interopRequireDefault(_noteManager);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import WaterFall from 'module/waterfall'
+var NoteManager = __webpack_require__(11);
 
 $('.add').on('click', function () {
-    _noteManager2.default.add();
+    NoteManager.add();
 });
-_noteManager2.default.load();
-// Toast.init('success')
+NoteManager.load();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -11067,20 +11050,13 @@ exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _note = __webpack_require__(12);
-
-var _note2 = _interopRequireDefault(_note);
-
-var _waterfall = __webpack_require__(4);
-
-var _waterfall2 = _interopRequireDefault(_waterfall);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var Note = __webpack_require__(12);
+var WaterFall = __webpack_require__(4);
 
 var NoteManager = function () {
     function add() {
-        _note2.default.init();
-        _waterfall2.default.init($('main'));
+        Note.init();
+        WaterFall.init($('main'));
     }
 
     function load() {
@@ -11088,9 +11064,9 @@ var NoteManager = function () {
             //页面加载时，发请求，拿数据，遍历渲染，布局
             // console.log(data)
             for (var i = 0; i < data.length; i++) {
-                _note2.default.init(data[i]);
+                Note.init(data[i]);
             }
-            _waterfall2.default.init($('main'));
+            WaterFall.init($('main'));
         });
     }
 
@@ -11111,16 +11087,8 @@ module.exports = NoteManager;
 /* WEBPACK VAR INJECTION */(function($) {
 
 __webpack_require__(13);
-
-var _waterfall = __webpack_require__(4);
-
-var _waterfall2 = _interopRequireDefault(_waterfall);
-
-var _toast = __webpack_require__(3);
-
-var _toast2 = _interopRequireDefault(_toast);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var WaterFall = __webpack_require__(4);
+var Toast = __webpack_require__(3);
 
 var Note = function () {
     function _Note(opts) {
@@ -11182,7 +11150,7 @@ var Note = function () {
                     if (text === '') {
                         _this.delete();
                         _this.$note.remove();
-                        _waterfall2.default.init($('main'));
+                        WaterFall.init($('main'));
                         // Toast.init('请输入内容');
                         return;
                     }
@@ -11198,7 +11166,7 @@ var Note = function () {
         this.$note.find('.close').on('click', function () {
             _this.$note.remove();
             _this.delete();
-            _waterfall2.default.init($('main'));
+            WaterFall.init($('main'));
         });
 
         $('body').on('mousemove', function (e) {
@@ -11218,19 +11186,19 @@ var Note = function () {
         $.post('/api/add', { msg: this.data.text }).then(function (result) {
             _this2.data = result; //服务器新增数据后，拿到服务器返回的id，赋到note上
             // console.log(this.data)
-            result.status === 0 ? _toast2.default.init('添加成功') : _toast2.default.init('添加失败');
+            result.status === 0 ? Toast.init('添加成功') : Toast.init('添加失败');
         });
     };
 
     _Note.prototype.delete = function () {
         $.post('/api/delete', { id: this.data.id }).then(function (result) {
-            result.status === 0 ? _toast2.default.init('删除成功') : _toast2.default.init('删除失败');
+            result.status === 0 ? Toast.init('删除成功') : Toast.init('删除失败');
         });
     };
 
     _Note.prototype.edit = function () {
         $.post('/api/edit', { id: this.data.id, msg: this.data.text }).then(function (result) {
-            result.status === 0 ? _toast2.default.init('编辑成功') : _toast2.default.init('编辑失败');
+            result.status === 0 ? Toast.init('编辑成功') : Toast.init('编辑失败');
         });
     };
 

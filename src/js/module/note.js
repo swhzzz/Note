@@ -1,6 +1,6 @@
-import 'scss/note.scss'
-import WaterFall from 'module/waterfall'
-import Toast from 'module/toast'
+require('scss/note.scss')
+const WaterFall = require('module/waterfall')
+const  Toast = require('module/toast')
 
 let Note = (function () {
     function _Note(opts) {

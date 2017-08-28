@@ -1,5 +1,5 @@
-import Note from './note'
-import WaterFall from 'module/waterfall'
+const Note =require('./note')
+const WaterFall = require('module/waterfall')
 
 let NoteManager = (function () {
     function add() {
