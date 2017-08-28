@@ -14,7 +14,7 @@ router.post('/add', (req, res, next) => {
     Note.create({text: req.body.msg});//创建
     Note.findAll({raw: true}).then((notes) => {//创建成功后，查找当前的id，并返回
         // console.log(notes)
-        let lastOneId = notes.pop().id;
+        var lastOneId = notes.pop().id;
         res.send({id: lastOneId, status: 0});//创建成功，告诉前端
     })
 });
