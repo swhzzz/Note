@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10452,7 +10452,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(8);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -10769,39 +10769,6 @@ function updateLink (link, options, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-var $ = __webpack_require__(0);
-__webpack_require__(6);
-
-var Toast = function () {
-    function _Toast(msg) {
-        this.create(msg);
-    }
-
-    _Toast.prototype.create = function (msg) {
-        var $div = $('<div class="toast">' + msg + '</div>');
-        $('body').append($div);
-        $div.addClass('animation');
-        setTimeout(function () {
-            $div.remove();
-        }, 2500);
-    };
-
-    return {
-        init: function init(msg) {
-            new _Toast(msg);
-        }
-    };
-}();
-
-module.exports = Toast;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
 var WaterFall = function () {
@@ -10843,14 +10810,14 @@ module.exports = WaterFall;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(9);
-var NoteManager = __webpack_require__(11);
+__webpack_require__(5);
+var NoteManager = __webpack_require__(8);
 
 $('.add').on('click', function () {
     NoteManager.add();
@@ -10859,13 +10826,13 @@ NoteManager.load();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(6);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10879,8 +10846,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./toast.scss", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./toast.scss");
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./index.scss", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./index.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -10890,7 +10857,7 @@ if(false) {
 }
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -10898,13 +10865,13 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".toast {\n  display: block;\n  position: fixed;\n  bottom: 16px;\n  color: #fff;\n  box-shadow: 0 0px 8px #fff;\n  padding: 8px 16px; }\n\n.animation {\n  animation: slide 3s; }\n\n@keyframes slide {\n  from {\n    right: 0;\n    transform: translateX(100%); }\n  50% {\n    right: 50%;\n    transform: translateX(50%); }\n  to {\n    right: 100%;\n    transform: translateX(-120%); } }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\na {\n  text-decoration: none;\n  color: inherit; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/27/59a2b45284497.jpg\");\n  background-size: cover; }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  box-shadow: 0 3px 25px #dff497; }\n  .topBar .btn {\n    padding: 8px 16px;\n    border: 1px solid #fff;\n    border-radius: 8px;\n    color: #fff;\n    outline: none;\n    cursor: pointer;\n    transition: all .6s; }\n    .topBar .btn:hover {\n      color: #dff497;\n      border-color: #dff497; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -10999,59 +10966,14 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(10);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./index.scss", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./index.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\na {\n  text-decoration: none;\n  color: inherit; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/27/59a2b45284497.jpg\");\n  background-size: cover; }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  box-shadow: 0 3px 25px #dff497; }\n  .topBar .btn {\n    padding: 8px 16px;\n    border: 1px solid #fff;\n    border-radius: 8px;\n    color: #fff;\n    outline: none;\n    cursor: pointer;\n    transition: all .6s; }\n    .topBar .btn:hover {\n      color: #dff497;\n      border-color: #dff497; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 11 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var Note = __webpack_require__(12);
-var WaterFall = __webpack_require__(4);
+var Note = __webpack_require__(9);
+var WaterFall = __webpack_require__(3);
 
 var NoteManager = function () {
     function add() {
@@ -11080,15 +11002,15 @@ module.exports = NoteManager;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(13);
-var WaterFall = __webpack_require__(4);
-var Toast = __webpack_require__(3);
+__webpack_require__(10);
+var WaterFall = __webpack_require__(3);
+var Toast = __webpack_require__(12);
 
 var Note = function () {
     function _Note(opts) {
@@ -11213,13 +11135,13 @@ module.exports = Note;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(14);
+var content = __webpack_require__(11);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11244,7 +11166,7 @@ if(false) {
 }
 
 /***/ }),
-/* 14 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -11253,6 +11175,84 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 // module
 exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 16px 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: #dff497;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: relative;\n    top: -20px;\n    left: 20px;\n    width: 30px;\n    height: 45px;\n    background: #008700;\n    cursor: move; }\n    .note .note-head:after {\n      position: absolute;\n      bottom: 0;\n      content: '';\n      width: 0;\n      height: 0;\n      border-top: 15px solid transparent;\n      border-left: 15px solid transparent;\n      border-right: 15px solid transparent;\n      border-bottom: 15px solid #dff497; }\n    .note .note-head:before {\n      position: absolute;\n      content: '';\n      width: 0;\n      height: 0;\n      top: 0;\n      left: 30px;\n      border-right: 7px solid transparent;\n      border-bottom: 12px solid #008700; }\n  .note .note-content {\n    position: relative;\n    padding: 0 16px 16px 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #000;\n    cursor: pointer; }\n  .note .time {\n    text-align: right; }\n\n.transition {\n  transition: all 1s; }\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0; }\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in; }\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1; }\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }\n  to {\n    transform: perspective(400px); } }\n\n.flipInX {\n  backface-visibility: visible !important;\n  animation: flipInX 1s; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(0);
+__webpack_require__(13);
+
+var Toast = function () {
+    function _Toast(msg) {
+        this.create(msg);
+    }
+
+    _Toast.prototype.create = function (msg) {
+        var $div = $('<div class="toast">' + msg + '</div>');
+        $('body').append($div);
+        $div.addClass('animation');
+        setTimeout(function () {
+            $div.remove();
+        }, 2500);
+    };
+
+    return {
+        init: function init(msg) {
+            new _Toast(msg);
+        }
+    };
+}();
+
+module.exports = Toast;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(14);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(2)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./toast.scss", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./toast.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".toast {\n  display: block;\n  position: fixed;\n  bottom: 16px;\n  color: #fff;\n  box-shadow: 0 0px 8px #fff;\n  padding: 8px 16px; }\n\n.animation {\n  animation: slide 3s; }\n\n@keyframes slide {\n  from {\n    right: 0;\n    transform: translateX(100%); }\n  50% {\n    right: 50%;\n    transform: translateX(50%); }\n  to {\n    right: 100%;\n    transform: translateX(-120%); } }\n", ""]);
 
 // exports
 
