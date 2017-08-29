@@ -15,6 +15,7 @@
 
 #### 其他
 - github第三方登录
+- linux命令行 git pm2
 
 ## 相关技能
 - HTML 5 CSS 3(页面的布局及特效)
