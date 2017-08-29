@@ -6,26 +6,26 @@
 - 前端代码结构组织
 - 模块化的开发方式
 - webpack及loader插件的使用
-- npm
+- npm npm scripts
 - 前后端联调
 
 #### 后端
 - nodejs
-- express框架、路由、sqlite3
+- express 路由 中间件 sqlite3
 
 #### 其他
 - github第三方登录
 
 ## 相关技能
-- HTML 5 CSS 3
-- SASS
-- jQuery 
-- Node.js
-- Express
-- sequelize
-- passport
-- ejs
-- webpack
+- HTML 5 CSS 3(页面的布局及特效)
+- SASS(编写结构清晰的css)
+- jQuery(高效编写js) 
+- Node.js(后端环境)
+- Express(利用express搭建后台框架)
+- sequelize(数据库存储数据)
+- passport(用于第三方登录)
+- ejs(模板引擎)
+- webpack(打包压缩资源)
 
 
 ## 完成的功能
