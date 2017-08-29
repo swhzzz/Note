@@ -5,12 +5,12 @@ var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 
 
-passport.serializeUser(function (user, done) {//第一次登录保存到session
+passport.serializeUser(function(user, done) { //第一次登录保存到session
     // console.log('---serializeUser---')
     // console.log(user)
     done(null, user);
 });
-passport.deserializeUser(function (obj, done) {//第二次登录从session中读取用户，不需要再次登录
+passport.deserializeUser(function(obj, done) { //第二次登录从session中读取用户，不需要再次登录
     // console.log('---deserializeUser---')
     done(null, obj);
 });
@@ -20,20 +20,20 @@ passport.use(new GitHubStrategy({
         clientSecret: 'ca549ad5f96c055711448557ea1011f3b99f71c3',
         callbackURL: "http://note.swhzzz.site/auth/github/callback"
     },
-    function (accessToken, refreshToken, profile, done) {
+    function(accessToken, refreshToken, profile, done) {
         // User.findOrCreate({githubId: profile.id}, function (err, user) {
         //     return done(err, user);
         // });
         // console.log(profile)
-        done(null, profile)//返回用户数据
+        done(null, profile) //返回用户数据
     }
 ));
 
 
 router.get('/github', passport.authenticate('github'));
 router.get('/github/callback',
-    passport.authenticate('github', {failureRedirect: '/login'}),
-    function (req, res) {
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function(req, res) {
         // console.log(req)
         req.session.user = {
             id: req.user.id,
@@ -45,9 +45,9 @@ router.get('/github/callback',
         // Successful authentication, redirect home.
         res.redirect('/');
     });
-router.get('/logOut',(req,res)=>{
-
-    // req.session.user=null
+router.get('/logOut', (req, res) => {
+    req.session.destroy()
+        // req.session.user=null
     res.redirect('/')
 })
 
