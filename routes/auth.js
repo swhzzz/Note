@@ -18,7 +18,7 @@ passport.deserializeUser(function (obj, done) {//第二次登录从session中读
 passport.use(new GitHubStrategy({
         clientID: '0c9d9f19b88d549e0087',
         clientSecret: 'ca549ad5f96c055711448557ea1011f3b99f71c3',
-        callbackURL: "http://127.0.0.1:4253/auth/github/callback"
+        callbackURL: "http://note.swhzzz.site/auth/github/callback"
     },
     function (accessToken, refreshToken, profile, done) {
         // User.findOrCreate({githubId: profile.id}, function (err, user) {
@@ -46,8 +46,8 @@ router.get('/github/callback',
         res.redirect('/');
     });
 router.get('/logOut',(req,res)=>{
+
     // req.session.user=null
-    req.session.destroy();
     res.redirect('/')
 })
 

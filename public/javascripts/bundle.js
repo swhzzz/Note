@@ -11025,7 +11025,7 @@ var Note = function () {
         // console.log(opts);
         if (opts) {
             //这里是从数据库加载的数据
-            opts.createdAt = opts.createdAt.substr(0, 19); //截取时间
+            opts.createdAt = opts.createdAt.substr(0, 10); //截取时间
             this.data = opts;
             console.log(this.data);
         } else {
