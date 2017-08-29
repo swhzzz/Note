@@ -5,25 +5,26 @@
     <title>
         <%= title %>
     </title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css"></link>
 </head>
 
 <body>
-<header>
-    <div class="topBar">
-        <a href="javascript:void(0)" class="add btn">新增</a>
-        <ul class="user-area">
-            <% if(isLogin){ %>
-            <li><img src="<%= user.avatar %>" alt=""></li>
-            <li><span title="<%= user.username%>">欢迎 , <%= user.username %></span></li>
-            <li><a href="/auth/logOut" class="btn">注销</a></li>
-            <% }else{ %>
-            <li><a href="/auth/github" class="login btn">Github登录</a></li>
-            <% } %>
-        </ul>
-    </div>
-</header>
-<main></main>
-<script src="/javascripts/bundle.js"></script>
+    <header>
+        <div class="topBar">
+            <a href="javascript:void(0)" class="add btn">新增</a>
+            <ul class="user-area">
+                <% if(isLogin){ %>
+                    <li><img src="<%= user.avatar %>" alt=""></li>
+                    <li><span title="<%= user.username%>">欢迎 , <%= user.username %></span></li>
+                    <li><a href="/auth/logOut" class="btn">注销</a></li>
+                    <% }else{ %>
+                        <li><a href="/auth/github" class="login btn">Github登录</a></li>
+                        <% } %>
+            </ul>
+        </div>
+    </header>
+    <main></main>
+    <script src="/js/bundle.js"></script>
 </body>
 
 </html>

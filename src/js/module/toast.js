@@ -1,23 +1,22 @@
-var $ =require('jquery')
 require('scss/toast.scss')
 
-var Toast = (function () {
+var Toast = (function() {
     function _Toast(msg) {
         this.create(msg)
     }
 
-    _Toast.prototype.create= function (msg) {
+    _Toast.prototype.create = function(msg) {
         var $div = $(`<div class="toast">${msg}</div>`);
         $('body').append($div);
         $div.addClass('animation');
-        setTimeout(()=>{
+        setTimeout(() => {
             $div.remove()
-        },2500)
+        }, 2500)
 
     };
 
     return {
-        init(msg){
+        init(msg) {
             new _Toast(msg)
         }
     }

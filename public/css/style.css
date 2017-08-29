@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+ul, li {
+  list-style: none; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+html, body {
+  height: 100%; }
+
+body {
+  background: url("https://i.loli.net/2017/08/27/59a2b45284497.jpg");
+  background-size: cover; }
+
+button {
+  padding: 8px 16px; }
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  box-shadow: 0 3px 25px #dff497; }
+  .topBar .user-area {
+    display: flex;
+    align-items: center; }
+    .topBar .user-area li {
+      margin-right: 16px;
+      color: #fff; }
+    .topBar .user-area img {
+      width: 24px;
+      vertical-align: middle; }
+  .topBar .btn {
+    padding: 8px 16px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: all .6s; }
+    .topBar .btn:hover {
+      color: #dff497;
+      border-color: #dff497; }
+
+main {
+  position: relative;
+  margin-top: 16px; }
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: ''; }
+
+.note {
+  position: absolute;
+  width: 230px;
+  margin: 16px 8px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #dff497;
+  box-shadow: 0 5px 5px; }
+  .note .note-head {
+    position: relative;
+    top: -20px;
+    left: 20px;
+    width: 30px;
+    height: 45px;
+    background: #008700;
+    cursor: move; }
+    .note .note-head:after {
+      position: absolute;
+      bottom: 0;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid #dff497; }
+    .note .note-head:before {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      top: 0;
+      left: 30px;
+      border-right: 7px solid transparent;
+      border-bottom: 12px solid #008700; }
+  .note .note-content {
+    position: relative;
+    padding: 0 16px 16px 16px;
+    outline: none; }
+  .note .close {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    right: 8px;
+    color: #000;
+    cursor: pointer; }
+  .note .username, .note .time {
+    text-align: right;
+    margin-right: 16px; }
+
+.transition {
+  transition: all 1s; }
+
+@keyframes flipInX {
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0; }
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in; }
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1; }
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }
+  to {
+    transform: perspective(400px); } }
+
+.flipInX {
+  backface-visibility: visible !important;
+  animation: flipInX 1s; }
+.toast {
+  display: block;
+  position: fixed;
+  bottom: 16px;
+  color: #fff;
+  box-shadow: 0 0px 8px #fff;
+  padding: 8px 16px; }
+
+.animation {
+  animation: slide 3s; }
+
+@keyframes slide {
+  from {
+    right: 0;
+    transform: translateX(100%); }
+  50% {
+    right: 50%;
+    transform: translateX(50%); }
+  to {
+    right: 100%;
+    transform: translateX(-120%); } }
