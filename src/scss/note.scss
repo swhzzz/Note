@@ -6,7 +6,7 @@
 
 .note {
   position: absolute;
-  width: 200px;
+  width: 230px;
   margin: 16px 8px;
   padding: 8px;
   border-radius: 5px;
@@ -56,8 +56,10 @@
     color: #000;
     cursor: pointer;
   }
-  .time {
+
+  .username, .time {
     text-align: right;
+    margin-right: 16px;
   }
 }
 

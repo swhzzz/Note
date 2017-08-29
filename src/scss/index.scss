@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+ul,li {
+  list-style: none;
+}
 a {
   text-decoration: none;
   color: inherit;
@@ -22,8 +25,19 @@ button {
   display: flex;
   justify-content: space-between;
   padding: 8px 16px;
-  //border-bottom: 1px solid #fff;
   box-shadow: 0 3px 25px rgb(223, 244, 151);
+  .user-area {
+    display: flex;
+    align-items: center;
+    li {
+      margin-right: 16px;
+      color: #fff;
+    }
+    img {
+      width: 24px;
+      vertical-align: middle;
+    }
+  }
   .btn {
     padding: 8px 16px;
     border: 1px solid #fff;

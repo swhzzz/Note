@@ -2,35 +2,47 @@ var express = require('express');
 var router = express.Router();
 var Note = require('../model/note');
 
-router.get('/fetch', (req, res, next) => {
+router.get('/fetch', (req, res) => {
     Note.findAll({raw: true}).then((notes) => {
         // console.log(notes)
         res.send(notes);
     })
 });
 
-router.post('/add', (req, res, next) => {
+router.post('/add', (req, res) => {
     // console.log(req);
-    Note.create({text: req.body.msg});//创建
-    Note.findAll({raw: true}).then((notes) => {//创建成功后，查找当前的id，并返回
-        // console.log(notes)
+    // console.log(req.session.user);
+    if(!req.session.user){
+       return res.send({status: 1,errorMsg: '请先登录'});
+    }
+    let username =req.session.user.username;
+    Note.create({text: req.body.text,username:username});
+    Note.findAll({raw: true}).then((notes) => {
+        // console.log(username)
         var lastOneId = notes.pop().id;
-        res.send({id: lastOneId, status: 0});//创建成功，告诉前端
+        res.send({id: lastOneId, status: 0,username: username});//id为note的id
     })
 });
 
-router.post('/delete', (req, res, next) => {
+router.post('/delete', (req, res) => {
     // console.log(req.body);
-    Note.destroy({where: {id: req.body.id}}).then(() => {
-        res.send({status: 0})//删除成功，告诉前端
+    if(!req.session.user){
+        return res.send({status: 1,errorMsg: '请先登录'});
+    }
+    let username = req.session.user.username;
+    Note.destroy({where: {id: req.body.id,username:username}}).then(() => {
+        res.send({status: 0})
     })
 });
 
-router.post('/edit', (req, res, next) => {
+router.post('/edit', (req, res) => {
     // console.log(req);
-    Note.update({text: req.body.msg},{where: {id: req.body.id}}).then(() => {
-
-        res.send({status: 0})//更新成功
+    if(!req.session.user){
+        return res.send({status: 1,errorMsg: '请先登录'});
+    }
+    let username = req.session.user.username;
+    Note.update({text: req.body.text},{where: {id: req.body.id,username:username}}).then(() => {
+        res.send({status: 0})
     })
 });
 

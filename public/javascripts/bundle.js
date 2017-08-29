@@ -10819,10 +10819,11 @@ module.exports = WaterFall;
 __webpack_require__(5);
 var NoteManager = __webpack_require__(8);
 
+NoteManager.load();
+
 $('.add').on('click', function () {
     NoteManager.add();
 });
-NoteManager.load();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -10865,7 +10866,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\na {\n  text-decoration: none;\n  color: inherit; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/27/59a2b45284497.jpg\");\n  background-size: cover; }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  box-shadow: 0 3px 25px #dff497; }\n  .topBar .btn {\n    padding: 8px 16px;\n    border: 1px solid #fff;\n    border-radius: 8px;\n    color: #fff;\n    outline: none;\n    cursor: pointer;\n    transition: all .6s; }\n    .topBar .btn:hover {\n      color: #dff497;\n      border-color: #dff497; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nul, li {\n  list-style: none; }\n\na {\n  text-decoration: none;\n  color: inherit; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background: url(\"https://i.loli.net/2017/08/27/59a2b45284497.jpg\");\n  background-size: cover; }\n\nbutton {\n  padding: 8px 16px; }\n\n.topBar {\n  display: flex;\n  justify-content: space-between;\n  padding: 8px 16px;\n  box-shadow: 0 3px 25px #dff497; }\n  .topBar .user-area {\n    display: flex;\n    align-items: center; }\n    .topBar .user-area li {\n      margin-right: 16px;\n      color: #fff; }\n    .topBar .user-area img {\n      width: 24px;\n      vertical-align: middle; }\n  .topBar .btn {\n    padding: 8px 16px;\n    border: 1px solid #fff;\n    border-radius: 8px;\n    color: #fff;\n    outline: none;\n    cursor: pointer;\n    transition: all .6s; }\n    .topBar .btn:hover {\n      color: #dff497;\n      border-color: #dff497; }\n\nmain {\n  position: relative;\n  margin-top: 16px; }\n", ""]);
 
 // exports
 
@@ -11026,13 +11027,15 @@ var Note = function () {
             //这里是从数据库加载的数据
             opts.createdAt = opts.createdAt.substr(0, 19); //截取时间
             this.data = opts;
+            console.log(this.data);
         } else {
-            this.data = { id: '', text: '在这里输入内容', createdAt: '' }; //这里是点击新增的时候的数据
+            //新增的data初始化
+            this.data = { id: '', text: '在这里输入内容', createdAt: '', username: '' }; //这里是点击新增的时候的数据
         }
     };
 
     _Note.prototype.createNode = function () {
-        var tpl = '<div class="note transition flipInX">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true">' + this.data.text + '</div> \n               <div class="time">' + this.data.createdAt + '</div>\n            </div>';
+        var tpl = '<div class="note transition flipInX">\n               <div class="note-head"></div>\n               <div class="close">x</div>\n               <div class="note-content" contenteditable="true" spellcheck="false">' + this.data.text + '</div> \n               <div class="username">' + this.data.username + '</div>\n               <div class="time">' + this.data.createdAt + '</div>\n            </div>';
         this.$note = $(tpl);
         this.$noteHead = this.$note.find('.note-head');
         this.$noteContent = this.$note.find('.note-content');
@@ -11043,12 +11046,7 @@ var Note = function () {
     _Note.prototype.bindEvent = function () {
         var _this = this;
 
-        this.$noteContent.on('focus', function () {
-            if (_this.data.text === '在这里输入内容') {
-                _this.$noteContent.html('');
-            }
-        });
-
+        //拖拽
         this.$noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - _this.$note.offset().left; //获取当前鼠标距离左侧边框的距离
             var evtY = e.pageY - _this.$note.offset().top;
@@ -11063,32 +11061,30 @@ var Note = function () {
             _this.$note.find('.close').fadeOut();
         });
 
-        this.$noteContent.on('blur', function () {
-            var text = _this.$noteContent.html();
-            var oldText = _this.$noteContent.data('oldText');
-            // console.log(oldText, text)
-            if (oldText !== text) {
-                if (_this.data.id) {
-                    if (text === '') {
-                        _this.devare();
-                        _this.$note.remove();
-                        WaterFall.init($('main'));
-                        // Toast.init('请输入内容');
-                        return;
-                    }
-                    _this.data.text = text;
-                    _this.edit();
-                } else {
-                    _this.data.text = text;
-                    _this.add();
-                }
+        this.$note.find('.close').on('click', function () {
+            _this.delete(_this.data.id, _this.data.username);
+        });
+
+        this.$noteContent.on('focus', function () {
+            if (_this.data.text === '在这里输入内容') {
+                _this.$noteContent.html('');
             }
         });
 
-        this.$note.find('.close').on('click', function () {
-            _this.$note.remove();
-            _this.devare();
-            WaterFall.init($('main'));
+        this.$noteContent.on('blur', function () {
+            var oldText = _this.$noteContent.data('oldText');
+            var newText = _this.$noteContent.html();
+            // console.log(newText);
+            if (!_this.data.id) {
+                //id不存在
+                if (newText) {
+                    _this.add(newText);
+                } else {
+                    _this.$note.remove();
+                }
+            } else if (oldText !== newText) {
+                _this.edit(oldText, newText, _this.data.id, _this.data.username);
+            }
         });
 
         $('body').on('mousemove', function (e) {
@@ -11102,25 +11098,56 @@ var Note = function () {
         });
     };
 
-    _Note.prototype.add = function () {
+    _Note.prototype.add = function (text) {
         var _this2 = this;
 
-        $.post('/api/add', { msg: this.data.text }).then(function (result) {
-            _this2.data = result; //服务器新增数据后，拿到服务器返回的id，赋到note上
-            // console.log(this.data)
-            result.status === 0 ? Toast.init('添加成功') : Toast.init('添加失败');
+        $.post('/api/add', { text: text }, function (result) {
+            // console.log(result)
+            if (result.status === 0) {
+                Object.assign(_this2.data, result);
+                console.log(_this2.data);
+                Toast.init('新增成功');
+            } else {
+                _this2.$note.remove();
+                Toast.init(result.errorMsg);
+            }
         });
     };
 
-    _Note.prototype.devare = function () {
-        $.post('/api/delete', { id: this.data.id }).then(function (result) {
-            result.status === 0 ? Toast.init('删除成功') : Toast.init('删除失败');
+    _Note.prototype.delete = function (id, username) {
+        var _this3 = this;
+
+        //id为note的id
+        console.log(id, username);
+        $.post('/api/delete', { id: id, username: username }, function (result) {
+            if (result.status === 0) {
+                _this3.$note.remove();
+                Toast.init('删除成功');
+                WaterFall.init($('main'));
+            } else {
+                Toast.init(result.errorMsg);
+            }
         });
     };
 
-    _Note.prototype.edit = function () {
-        $.post('/api/edit', { id: this.data.id, msg: this.data.text }).then(function (result) {
-            result.status === 0 ? Toast.init('编辑成功') : Toast.init('编辑失败');
+    _Note.prototype.edit = function (oldText, newText, id, username) {
+        var _this4 = this;
+
+        $.post('/api/edit', { text: newText, id: id, username: username }, function (result) {
+            if (newText === '') {
+                //如果修改后内容为空，则删除
+                console.log('删除了');
+                return _this4.delete(id, username);
+            }
+            if (result.status === 0) {
+                Object.assign(_this4.data, result);
+                _this4.$noteContent.html(newText);
+                Toast.init('修改成功');
+            } else {
+                //未登录时，显示你提示信息，并把内容重置
+                _this4.$noteContent.html(oldText);
+                Toast.init(result.errorMsg);
+            }
         });
     };
 
@@ -11174,7 +11201,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 200px;\n  margin: 16px 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: #dff497;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: relative;\n    top: -20px;\n    left: 20px;\n    width: 30px;\n    height: 45px;\n    background: #008700;\n    cursor: move; }\n    .note .note-head:after {\n      position: absolute;\n      bottom: 0;\n      content: '';\n      width: 0;\n      height: 0;\n      border-top: 15px solid transparent;\n      border-left: 15px solid transparent;\n      border-right: 15px solid transparent;\n      border-bottom: 15px solid #dff497; }\n    .note .note-head:before {\n      position: absolute;\n      content: '';\n      width: 0;\n      height: 0;\n      top: 0;\n      left: 30px;\n      border-right: 7px solid transparent;\n      border-bottom: 12px solid #008700; }\n  .note .note-content {\n    position: relative;\n    padding: 0 16px 16px 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #000;\n    cursor: pointer; }\n  .note .time {\n    text-align: right; }\n\n.transition {\n  transition: all 1s; }\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0; }\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in; }\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1; }\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }\n  to {\n    transform: perspective(400px); } }\n\n.flipInX {\n  backface-visibility: visible !important;\n  animation: flipInX 1s; }\n", ""]);
+exports.push([module.i, ".clearfix:after {\n  display: block;\n  clear: both;\n  content: ''; }\n\n.note {\n  position: absolute;\n  width: 230px;\n  margin: 16px 8px;\n  padding: 8px;\n  border-radius: 5px;\n  background-color: #dff497;\n  box-shadow: 0 5px 5px; }\n  .note .note-head {\n    position: relative;\n    top: -20px;\n    left: 20px;\n    width: 30px;\n    height: 45px;\n    background: #008700;\n    cursor: move; }\n    .note .note-head:after {\n      position: absolute;\n      bottom: 0;\n      content: '';\n      width: 0;\n      height: 0;\n      border-top: 15px solid transparent;\n      border-left: 15px solid transparent;\n      border-right: 15px solid transparent;\n      border-bottom: 15px solid #dff497; }\n    .note .note-head:before {\n      position: absolute;\n      content: '';\n      width: 0;\n      height: 0;\n      top: 0;\n      left: 30px;\n      border-right: 7px solid transparent;\n      border-bottom: 12px solid #008700; }\n  .note .note-content {\n    position: relative;\n    padding: 0 16px 16px 16px;\n    outline: none; }\n  .note .close {\n    display: none;\n    position: absolute;\n    z-index: 1;\n    top: 8px;\n    right: 8px;\n    color: #000;\n    cursor: pointer; }\n  .note .username, .note .time {\n    text-align: right;\n    margin-right: 16px; }\n\n.transition {\n  transition: all 1s; }\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0; }\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in; }\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1; }\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }\n  to {\n    transform: perspective(400px); } }\n\n.flipInX {\n  backface-visibility: visible !important;\n  animation: flipInX 1s; }\n", ""]);
 
 // exports
 

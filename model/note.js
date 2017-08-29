@@ -28,9 +28,13 @@ const sequelize = new Sequelize(undefined, undefined, undefined, {
 const Note = sequelize.define('note', { //定义存储数据的模型
     text: {
         type: Sequelize.STRING
+    },
+    username: {
+        type: Sequelize.STRING
     }
 });
 
+// Note.sync({force:true}) //删除数据库
 // force: true will drop the table if it already exists
 // Note.sync().then(() => {
 //     Note.create({text: 'hello'}) //创建一条数据
