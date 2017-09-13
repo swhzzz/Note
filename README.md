@@ -1,5 +1,4 @@
 # express-sticky-note
-[预览](http://note.swhzzz.site)
 
 ## 涉及技术栈
 #### 前端
