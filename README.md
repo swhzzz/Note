@@ -1,4 +1,4 @@
-# express-sticky-note
+# Note
 
 ## 涉及技术栈
 #### 前端
